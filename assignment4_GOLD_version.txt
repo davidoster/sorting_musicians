@@ -1,0 +1,34 @@
+Step 1.
+	Select a model from the group project of your team
+	e.g. Musician
+
+Step 2.
+	Identify those attributes that can be used from a sorting alorithm 
+	so that we show how musician are are ordered based on 
+	a specific attribute of theirs, 
+	e.g. 
+		- years of experience (3 [every sorting alg] X sorting order [ASC,DESC])
+		- position
+		- number of concerts that has participated
+Step 3.
+	If there are more than one attributes we need to classify each attribute 
+	based on common experience
+Step 4.
+	Implement the following sorting alogirthms based on the previous selection of
+	attributes,
+	a. Quick Sort
+	b. Bubble Sort
+	c. Bucket Sort
+Step 5. 
+	Implement an hierarchical sorting (using previous 3 algorithms) 
+	where you sort by the first attribute and then by the second next etc.
+
+General Guidelines
+------------------
+You need to find the previous sorting algorithms and understand the way they sort items.
+You need to change these algorithms so they fit your special case scenario.
+You need to do a comparative analysis where you calculate 
+	the time that was needed per algorithm to complete the sorting of:
+- 10000 items
+- ASC, DESC
+- with combined attributes
