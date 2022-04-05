@@ -25,7 +25,7 @@ class QuickSort {
         let i = (low - 1);
 
         for (let j = low; j <= high - 1; j++) {
-            if(this.sort_order = 'ASC') {
+            if(this.sort_order == 'ASC') {
                 if (array[j][this.attribute] < pivot[this.attribute]) {
                     i++;
                     this.swap(array, i, j);

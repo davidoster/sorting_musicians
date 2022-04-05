@@ -15,8 +15,14 @@ let { generateRandomMusicians, randomNameGenerator } = require('./services/rando
 // console.log(sortedPositions);
 
 let musicians = generateRandomMusicians(5);
-printMusicians(musicians);
+
+musicians.forEach(mus => {
+    console.log(mus.toString());
+});
+
 let sort_order = 'DESC';
+// position
+// no_of_concerts
 let attribute = 'years_of_experience';
 
 let bubbleSort = new BubbleSort(musicians, sort_order, attribute);

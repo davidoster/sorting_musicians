@@ -7,7 +7,7 @@ class BubbleSort {
         this.result = [...array];
         this.sort_order = sort_order;
         this.attribute = attribute;
-        this.startTime = performance.now();
+        this.startTime = performance.now(); // new Date().now()
         this.sort();
         this.endTime = performance.now();
     }
