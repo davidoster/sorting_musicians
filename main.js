@@ -1,6 +1,12 @@
+let BubbleSort = require('./bubble_sort');
+let QuickSort = require('./quick_sort');
+
 // Position: Maestros, Biolistis, Pneustos, Tybanos
 const Positions = [{ name: 'MAESTROS', index: 0 }, { name: 'VIOLIN', index: 1 }, { name: 'PNEUMATIC', index: 2 }, { name: 'DRUMS', index: 3 }];
 
+function printPositionAsStringOfXCharacters(text, x) {
+    return(text + Array(x - text.length).fill(' ').join(''));
+}
 class Musician {
     constructor(name, age, position, years_of_experience, no_of_concerts) {
         this.name = name;
@@ -11,7 +17,7 @@ class Musician {
     }
 
     toString = () => {
-        return (`Musician { Name:${this.name} Age:${this.age} Position:${Positions[this.position.index].name} Yrs Of Exp:${this.years_of_experience} No Of Concerts:${this.no_of_concerts} }`);
+        return (`Musician { Name:${this.name}\tAge:${this.age.toFixed(2)}\tPosition:${printPositionAsStringOfXCharacters(Positions[this.position.index].name, 9)}\tYrs Of Exp:${this.years_of_experience.toFixed(2)}\tNo Of Concerts:${this.no_of_concerts} }`);
     }
 }
 
@@ -60,26 +66,13 @@ function printMusicians(musicians) {
 // let sortedPositions = sortByIndex(Positions);
 // console.log(sortedPositions);
 
-
-// let's try a bubble sort asc on years_of_experience
-function bubble_sort(musicians) {
-    let result = [...musicians];
-
-    for(let i = 0; i < result.length - 1; i++) {
-        for(let j = 0; j < result.length - i - 1; j++) {
-            if(result[j].years_of_experience > result[j + 1].years_of_experience) {
-                let temp = result[j];
-                result[j] = result[j + 1];
-                result[j + 1] = temp;
-            }
-        }
-    }
-    return(result);
-}
-
 let musicians = generateRandomMusicians(5);
 printMusicians(musicians);
-console.log("\n-----AFTER BUBBLE SORT-----\n");
-let sortedMusiciansByYrsOfExperience = bubble_sort(musicians);
-printMusicians(sortedMusiciansByYrsOfExperience);
+let sort_order = 'DESC';
+let attribute = 'years_of_experience';
 
+let bubbleSort = new BubbleSort(musicians, sort_order, attribute);
+bubbleSort.printResults();
+
+let quickSort = new QuickSort(musicians, sort_order, attribute);
+quickSort.printResults();

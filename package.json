@@ -1,0 +1,22 @@
+{
+  "name": "sorting_musicians",
+  "version": "1.0.0",
+  "description": "A sorting exercise",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davidoster/sorting_musicians.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/davidoster/sorting_musicians/issues"
+  },
+  "homepage": "https://github.com/davidoster/sorting_musicians#readme",
+  "dependencies": {
+    "perf_hooks": "^0.0.1"
+  }
+}

@@ -4,7 +4,7 @@ Step 1.
 
 Step 2.
 	Identify those attributes that can be used from a sorting alorithm 
-	so that we show how musician are are ordered based on 
+	so that we show how musicians are ordered based on 
 	a specific attribute of theirs, 
 	e.g. 
 		- years of experience (3 [every sorting alg] X sorting order [ASC,DESC])
