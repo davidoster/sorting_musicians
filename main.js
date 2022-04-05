@@ -14,19 +14,27 @@ let { generateRandomMusicians, randomNameGenerator } = require('./services/rando
 // let sortedPositions = sortByIndex(Positions);
 // console.log(sortedPositions);
 
-let musicians = generateRandomMusicians(5);
+// a few == 5
+// some == 1000
+// too much == 100000
+let n = 5;
+let musicians = generateRandomMusicians(n);
+
+// console.log("Hello"); // O(1)
 
 musicians.forEach(mus => {
     console.log(mus.toString());
 });
+// O(n)
 
-let sort_order = 'DESC';
+
+let sort_order = 'ASC';
 // position
 // no_of_concerts
 let attribute = 'years_of_experience';
 
 let bubbleSort = new BubbleSort(musicians, sort_order, attribute);
-bubbleSort.printResults();
+bubbleSort.printResults(false);
 
 let quickSort = new QuickSort(musicians, sort_order, attribute);
-quickSort.printResults();
+quickSort.printResults(false);
