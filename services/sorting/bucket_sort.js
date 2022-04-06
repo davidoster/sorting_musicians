@@ -32,27 +32,15 @@ class BucketSort {
         if (this.attributeMeta.min == 0) n++;
 
         let buckets = new Array(n).fill().map((value, index) => value = []);
-        this.result.forEach((element, index) => {
-            // console.log(this.attribute(element));
-            buckets[this.attribute(element)].push(element);
-        });
-
-        buckets.forEach(element => {
-            let cThis = this;
-            if(this.sort_order == 'ASC') {
-                element.sort(
-                    function (a, b) {
-                        return (a[cThis.attribute(a)] - b[cThis.attribute(b)]);
-                    }
-                );
+        if(this.sort_order === 'ASC') {
+                this.result.forEach((element, index) => {
+                    buckets[this.attribute(element)].push(element);
+                });
             } else {
-                element.sort(
-                    function (a, b) {
-                        return (b[cThis.attribute(a)] - a[cThis.attribute(b)]);
-                    }
-                );
+                this.result.forEach((element, index) => {
+                    buckets[n-this.attribute(element)].push(element);
+                });
             }
-        });
         this.result = buckets;
     }
 
