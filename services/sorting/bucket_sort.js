@@ -39,21 +39,17 @@ class BucketSort {
 
         buckets.forEach(element => {
             let cThis = this;
-            if(this.sort_order == 'ASC') {
-                element.sort(
-                    function (a, b) {
-                        return (a[cThis.attribute(a)] - b[cThis.attribute(b)]);
-                    }
-                );
-            } else {
-                element.sort(
-                    function (a, b) {
-                        return (b[cThis.attribute(a)] - a[cThis.attribute(b)]);
-                    }
-                );
+            element.sort((a, b) => {
+                a[cThis.attribute(a)] - b[cThis.attribute(b)];
             }
+            );
         });
-        this.result = buckets;
+        if (this.sort_order == 'ASC') {
+            this.result = buckets;
+        } else {
+            this.result = buckets.reverse();
+        }
+
     }
 
     showElapsedTime() {
