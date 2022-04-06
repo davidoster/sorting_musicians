@@ -26,13 +26,13 @@ class BubbleSort {
         for (let i = 0; i < this.result.length - 1; i++) {
             for (let j = 0; j < this.result.length - i - 1; j++) {
                 if (this.sort_order == 'ASC') {
-                    if (this.result[j][this.attribute] > this.result[j + 1][this.attribute]) {
+                    if (this.result[j][this.attribute] > this.result[j + 1][this.attribute] || this.result[j][this.attribute]?.index > this.result[j + 1][this.attribute]?.index) {
                         let temp = this.result[j];
                         this.result[j] = this.result[j + 1];
                         this.result[j + 1] = temp;
                     }
                 } else {
-                    if (this.result[j][this.attribute] < this.result[j + 1][this.attribute]) {
+                    if (this.result[j][this.attribute] < this.result[j + 1][this.attribute] || this.result[j][this.attribute]?.index < this.result[j + 1][this.attribute]?.index) {
                         this.swap(this.result, j, j + 1);
                     }
                 }

@@ -26,13 +26,13 @@ class QuickSort {
 
         for (let j = low; j <= high - 1; j++) {
             if(this.sort_order == 'ASC') {
-                if (array[j][this.attribute] < pivot[this.attribute]) {
+                if (array[j][this.attribute] < pivot[this.attribute] || array[j][this.attribute]?.index < pivot[this.attribute]?.index) {
                     i++;
                     this.swap(array, i, j);
                 }
             }
             else {
-                if (array[j][this.attribute] > pivot[this.attribute]) {
+                if (array[j][this.attribute] > pivot[this.attribute] || array[j][this.attribute]?.index > pivot[this.attribute]?.index) {
                     i++;
                     this.swap(array, i, j);
                 }
