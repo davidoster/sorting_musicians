@@ -44,3 +44,15 @@ for n
 O(40)
 n * (n/2) * (n+1) = 
 O(logn)
+
+PROBLEMS
+--------
+Bubble ASC position
+Bubble DESC position
+
+Quick ASC position
+Quick DESC position
+
+Bucket DESC years_of_experience
+Bucket DESC position
+Bucket DESC no_of_concerts

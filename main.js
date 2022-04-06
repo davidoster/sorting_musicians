@@ -1,40 +1,26 @@
-let BubbleSort = require('./bubble_sort');
-let QuickSort = require('./quick_sort');
-let { Positions, Musician } = require('./models/musician');
+let BubbleSort = require('./services/sorting/bubble_sort');
+let QuickSort = require('./services/sorting/quick_sort');
+let BucketSort = require('./services/sorting/bucket_sort');
+let { Positions, Musician, AttributeMetaData } = require('./models/musician');
 let { generateRandomMusicians, randomNameGenerator } = require('./services/random_data');
 
-// function sortByIndex(array) {
-//     let result = [];
-//     result = array.sort((a, b) => {
-//         return(a.index - b.index);
-//     });
-//     return(result);
-// }
-
-// let sortedPositions = sortByIndex(Positions);
-// console.log(sortedPositions);
-
-// a few == 5
-// some == 1000
-// too much == 100000
 let n = 5;
 let musicians = generateRandomMusicians(n);
-
-// console.log("Hello"); // O(1)
 
 musicians.forEach(mus => {
     console.log(mus.toString());
 });
-// O(n)
 
-
-let sort_order = 'ASC';
+let sort_order = 'DESC';
+// years_of_experience
 // position
 // no_of_concerts
-let attribute = 'years_of_experience';
-
+let attribute = 'no_of_concerts';
 let bubbleSort = new BubbleSort(musicians, sort_order, attribute);
-bubbleSort.printResults(false);
+bubbleSort.printResults();
 
 let quickSort = new QuickSort(musicians, sort_order, attribute);
-quickSort.printResults(false);
+quickSort.printResults();
+
+let bucketSort = new BucketSort(musicians, sort_order, attribute);
+bucketSort.printResults();
