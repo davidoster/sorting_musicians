@@ -34,26 +34,31 @@ class BucketSort {
         let buckets = new Array(n).fill().map((value, index) => value = []);
         this.result.forEach((element, index) => {
             // console.log(this.attribute(element));
-            buckets[this.attribute(element)].push(element);
-        });
-
-        buckets.forEach(element => {
-            let cThis = this;
-            if(this.sort_order == 'ASC') {
-                element.sort(
-                    function (a, b) {
-                        return (a[cThis.attribute(a)] - b[cThis.attribute(b)]);
-                    }
-                );
-            } else {
-                element.sort(
-                    function (a, b) {
-                        return (b[cThis.attribute(a)] - a[cThis.attribute(b)]);
-                    }
-                );
+            if(buckets[this.attribute(element)]) {
+                buckets[this.attribute(element)].push(element);
             }
         });
-        this.result = buckets;
+
+        let xResult = [];
+        if(this.sort_order == 'ASC') {
+            for(let i = 0;  i < buckets.length; i++) {
+                if(buckets[i].length > 0) {
+                    for(let j = 0; j < buckets[i].length; j++) {
+                            xResult.push(buckets[i][j]);
+                    }
+                }
+            }
+        } else {
+            for(let i = buckets.length - 1;  i >= 0; i--) {
+                if(buckets[i].length > 0) {
+                    for(let j = buckets[i].length - 1; j >= 0; j--) {
+                            xResult.push(buckets[i][j]);
+                    }
+                }
+            }
+        }
+        
+        this.result = xResult;
     }
 
     showElapsedTime() {
@@ -62,13 +67,9 @@ class BucketSort {
 
     printResults(showList = true) {
         console.log(`AFTER ${this.name} Sort`);
-        if (showList) {
-            this.result.forEach(groupOfMusicians => {
-                if(groupOfMusicians && groupOfMusicians.length > 0) {
-                    groupOfMusicians.forEach(musician => {
-                        console.log(musician.toString());
-                    });
-                }
+        if(showList) {
+            this.result.forEach(musician => {
+                console.log(musician.toString());
             });
         }
         console.log(this.showElapsedTime());
