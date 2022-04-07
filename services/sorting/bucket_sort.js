@@ -1,4 +1,5 @@
 const { performance } = require('perf_hooks');
+const { runInThisContext } = require('vm');
 let { AttributeMetaData } = require('../../models/musician');
 
 class BucketSort {
@@ -7,24 +8,35 @@ class BucketSort {
         this.array = array;
         this.result = [...array];
         this.sort_order = sort_order;
-        this.attribute_text = attribute;
         this.attribute = (x) => {
-            switch(this.attribute_text) {
+            switch (this.attribute_text) {
                 case 'years_of_experience':
-                    return(Math.round(x[this.attribute_text]));
+                    return (Math.round(x[this.attribute_text]));
                     break;
                 case 'position':
-                    return(x[this.attribute_text].index);
+                    return (x[this.attribute_text].index);
                     break;
                 case 'no_of_concerts':
-                    return(x[this.attribute_text]);
+                    return (x[this.attribute_text]);
                     break;
             }
         }
-        this.attributeMeta = AttributeMetaData[this.attribute_text];
-        this.startTime = performance.now(); // new Date().now()
-        this.sort();
-        this.endTime = performance.now();
+        if (attribute.length && attribute.length > 1) {
+            this.attributes_text = attribute;
+            // this.attributes_text[0], this.attributes_text[1]
+            this.attribute_text = this.attributes_text[0];
+            this.attributeMeta = AttributeMetaData[this.attribute_text];
+            this.startTime = performance.now();
+            this.sort();
+            this.sortCombined();
+            this.endTime = performance.now();
+        } else {
+            this.attribute_text = attribute;
+            this.attributeMeta = AttributeMetaData[this.attribute_text];
+            this.startTime = performance.now(); // new Date().now()
+            this.sort();
+            this.endTime = performance.now();
+        }
     }
 
     sort() {
@@ -34,31 +46,79 @@ class BucketSort {
         let buckets = new Array(n).fill().map((value, index) => value = []);
         this.result.forEach((element, index) => {
             // console.log(this.attribute(element));
-            if(buckets[this.attribute(element)]) {
+            if (buckets[this.attribute(element)]) {
                 buckets[this.attribute(element)].push(element);
             }
         });
 
         let xResult = [];
-        if(this.sort_order == 'ASC') {
-            for(let i = 0;  i < buckets.length; i++) {
-                if(buckets[i].length > 0) {
-                    for(let j = 0; j < buckets[i].length; j++) {
-                            xResult.push(buckets[i][j]);
+        if (this.sort_order == 'ASC') {
+            for (let i = 0; i < buckets.length; i++) {
+                if (buckets[i].length > 0) {
+                    for (let j = 0; j < buckets[i].length; j++) {
+                        xResult.push(buckets[i][j]);
                     }
                 }
             }
         } else {
-            for(let i = buckets.length - 1;  i >= 0; i--) {
-                if(buckets[i].length > 0) {
-                    for(let j = buckets[i].length - 1; j >= 0; j--) {
-                            xResult.push(buckets[i][j]);
+            for (let i = buckets.length - 1; i >= 0; i--) {
+                if (buckets[i].length > 0) {
+                    for (let j = buckets[i].length - 1; j >= 0; j--) {
+                        xResult.push(buckets[i][j]);
                     }
                 }
             }
         }
-        
         this.result = xResult;
+    }
+
+    sortCombined() {
+        let n = this.attributeMeta.max;
+        if (this.attributeMeta.min == 0) n++;
+
+        let buckets = new Array(n).fill().map((value, index) => value = []);
+        let xResult = Object.assign(new Array(),this.result); // [...this.result]
+        xResult.forEach((element, index) => {
+            // console.log(this.attribute(element));
+            if (buckets[this.attribute(element)]) {
+                buckets[this.attribute(element)].push(element);
+            }
+        });
+        this.result = xResult;
+        
+        // sorting by 2nd attribute
+        this.attribute_text = this.attributes_text[1];
+        this.attributeMeta = AttributeMetaData[this.attribute_text];
+        this.result.forEach(bucket => {
+            // console.log(bucket);
+            if(bucket && bucket.length) {
+                bucket.sort((a, b) => {
+                    // console.log(this.attribute(a), this.attribute(b));
+                    this.attribute(a) - this.attribute(b);
+                });
+            }
+        });
+
+        // flatten
+        let yResult = [];
+        if (this.sort_order == 'ASC') {
+            for (let i = 0; i < this.result.length; i++) {
+                if (this.result[i].length > 0) {
+                    for (let j = 0; j < this.result[i].length; j++) {
+                        yResult.push(this.result[i][j]);
+                    }
+                }
+            }
+        } else {
+            for (let i = this.result.length - 1; i >= 0; i--) {
+                if (this.result[i].length > 0) {
+                    for (let j = this.result[i].length - 1; j >= 0; j--) {
+                        yResult.push(this.result[i][j]);
+                    }
+                }
+            }
+        }
+        this.result = yResult;
     }
 
     showElapsedTime() {
@@ -67,7 +127,7 @@ class BucketSort {
 
     printResults(showList = true) {
         console.log(`AFTER ${this.name} Sort`);
-        if(showList) {
+        if (showList) {
             this.result.forEach(musician => {
                 console.log(musician.toString());
             });
@@ -83,7 +143,7 @@ module.exports = BucketSort;
 //     if (n <= 0)
 //         return;
 
-//     // 1) Create n empty buckets      
+//     // 1) Create n empty buckets
 //     let buckets = new Array(n);
 
 //     for (let i = 0; i < n; i++) {

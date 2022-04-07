@@ -22,8 +22,12 @@ class Musician {
         return(text + Array(x - text.length).fill(' ').join(''));
     }
 
-    toString = () => {
-        return (`Musician { Name: ${this.name}\tAge: ${this.age.toFixed(2)}\tPosition: ${this.positionAsStrOfXChars(9)}\tYrs Of Exp: ${this.years_of_experience.toFixed(2).toString().padStart(5, '0')}\tNo Of Concerts: ${this.no_of_concerts} }`);
+    toString = (full = true) => {
+        if(full) {
+            return (`Musician { Name: ${this.name}\tAge: ${this.age.toFixed(2)}\tPosition: ${this.positionAsStrOfXChars(9)}\tYrs Of Exp: ${this.years_of_experience}\tNo Of Concerts: ${this.no_of_concerts} }`);
+        } else {
+            return (`Musician { Name: ${this.name}\tAge: ${this.age.toFixed(2)}\tPosition: ${this.positionAsStrOfXChars(9)}\tYrs Of Exp: ${this.years_of_experience.toFixed(2).toString().padStart(5, '0')}\tNo Of Concerts: ${this.no_of_concerts} }`);
+        }
     }
 }
 
